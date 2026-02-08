@@ -5,15 +5,18 @@ from django.contrib.auth import get_user_model
 
 
 class DriverLicenseUpdateForm(forms.ModelForm):
-    license_number = forms.CharField(max_length=8,
-                               min_length=8,
-                               validators=[
-                                    RegexValidator(
-                                        regex=r'^[A-Z]{3}\d{5}$',
-                                        message='Format: AAA12345'
-                                    )
-                                ]
-                               )
+    license_number = (
+        forms.CharField(
+            max_length=8,
+            min_length=8,
+            validators=[
+                RegexValidator(
+                    regex=r"^[A-Z]{3}\d{5}$",
+                    message="Format: AAA12345"
+                )
+            ]
+        )
+    )
 
     class Meta:
         model = Driver
@@ -26,7 +29,6 @@ class CarForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple,
         required=False
     )
-
 
     class Meta:
         model = Car
