@@ -3,9 +3,9 @@ from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import DriverLicenseUpdateForm, CarForm
+from .forms import DriverLicenseUpdateForm, CarForm, DriverCreationForm
 from django.http import HttpResponseRedirect
-
+from django.contrib.auth import get_user_model
 
 from .models import Driver, Car, Manufacturer
 
@@ -88,13 +88,13 @@ class DriverListView(LoginRequiredMixin, generic.ListView):
 
 
 class DriverCreateView(LoginRequiredMixin, generic.CreateView):
-    model = Driver
-    form_class = DriverLicenseUpdateForm
+    model = get_user_model()
+    form_class = DriverCreationForm
 
 
-class DriverDeleteView(LoginRequiredMixin, generic.DetailView):
+class DriverDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Driver
-    form_class = DriverLicenseUpdateForm
+    success_url = reverse_lazy("taxi:driver-list")
 
 
 class DriverUpdateView(LoginRequiredMixin, generic.UpdateView):
